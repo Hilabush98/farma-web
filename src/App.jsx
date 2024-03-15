@@ -1,10 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { DatePicker, ConfigProvider, theme } from "antd";
 import es_ES from "antd/locale/es_ES";
 import en_US from "antd/locale/en_US";
-import { Layaout } from "./components/Layaout.jsx";
+import { Layaout, Login } from "./components";
 
 function App() {
+  const [userConfiguration, setuserConfiguration] = useState({
+    user: null,
+    password: null,
+    permission: null,
+    expirationDate: null,
+    isLogged: false,
+  });
+  useEffect(() => {
+    console.log(userConfiguration);
+  }, [userConfiguration]);
+
   return (
     <>
       <ConfigProvider
@@ -13,7 +24,7 @@ function App() {
         }}
         locale={es_ES}
       >
-        <Layaout />
+        <Login setuserConfiguration={setuserConfiguration} />
       </ConfigProvider>
     </>
   );
