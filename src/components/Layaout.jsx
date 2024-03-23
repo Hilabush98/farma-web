@@ -1,12 +1,6 @@
 import React from "react";
-import {
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-} from "@ant-design/icons";
-import { Button } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 import { Layout, Menu, theme } from "antd";
-import { TicketForm, Login } from "./index";
 const { Header, Content, Footer, Sider } = Layout;
 
 const items = [
@@ -191,11 +185,10 @@ const items = [
   },
 ];
 
-console.log("aa");
 export const Layaout = () => {
   const themeConfig = theme.useToken();
   const {
-    token: { colorBgContainer, borderRadiusLG },
+    token: { colorBgContainer },
   } = themeConfig;
   console.log(colorBgContainer);
   return (
@@ -235,9 +228,7 @@ export const Layaout = () => {
           style={{
             margin: "24px 16px 0",
           }}
-        >
-          <Login themeConfig={themeConfig}></Login>
-        </Content>
+        ></Content>
         <Footer
           style={{
             textAlign: "center",

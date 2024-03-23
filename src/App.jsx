@@ -1,33 +1,26 @@
-import { useEffect, useState, useContext } from "react";
-import { DatePicker, ConfigProvider, theme } from "antd";
-import es_ES from "antd/locale/es_ES";
-import en_US from "antd/locale/en_US";
-import { Layaout, Login } from "./components";
+/* eslint-disable react/prop-types */
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { LoginMenu, Layaout } from "./routeList";
+import { AuthContext } from "./context/userContext";
+import { useContext } from "react";
 
-function App() {
-  const [userConfiguration, setuserConfiguration] = useState({
-    user: null,
-    password: null,
-    permission: null,
-    expirationDate: null,
-    isLogged: false,
-  });
-  useEffect(() => {
-    console.log(userConfiguration);
-  }, [userConfiguration]);
+const App = () => {
+  const { user } = useContext(AuthContext);
 
+  console.log(user);
   return (
-    <>
-      <ConfigProvider
-        theme={{
-          algorithm: theme.darkAlgorithm,
-        }}
-        locale={es_ES}
-      >
-        <Login setuserConfiguration={setuserConfiguration} />
-      </ConfigProvider>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={user?.isLogged ? <Layaout /> : <LoginMenu />}
+        />
+        <Route
+          path="/Login"
+          element={user?.isLogged ? <Layaout /> : <LoginMenu />}
+        />
+      </Routes>
+    </BrowserRouter>
   );
-}
-
+};
 export default App;

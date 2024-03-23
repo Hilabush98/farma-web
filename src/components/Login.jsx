@@ -1,22 +1,54 @@
 /* eslint-disable react/prop-types */
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input, theme, Card } from "antd";
-import { Layout, Flex } from "antd";
+import { Button, Form, Input, theme, Card } from "antd";
+import { useContext } from "react";
+import { AuthContext } from "../context/userContext";
+import { Layout } from "antd";
 import { useState } from "react";
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Footer, Content } = Layout;
 
-const Login = ({ setuserConfiguration }) => {
+const Login = () => {
+  const { login } = useContext(AuthContext);
+
+  const [statusForm, setStatusForm] = useState({
+    password: null,
+    buttom: null,
+  });
+
   const themeConfig = theme.useToken();
   const {
-    token: { colorBgContainer, borderRadiusLG },
+    token: { colorBgContainer },
   } = themeConfig;
-  const onFinish = (values) => {
-    const 
-    console.log("Received values of form: ", values);
-    setuserConfiguration((e) => {
-      return { ...e, user:values.user };
-    });
+  const onFinish = async (values) => {
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        grant_type: "client_credentials",
+        client_id: values.username,
+        client_secret: values.password,
+        scorpe: "Masivas",
+      }),
+    };
+    const red = fetch(
+      "https://api-oauth2-fda.apps.cloud-ocp-stg.fahorro.com.mx/oauth2/ldap/jwt",
+      requestOptions
+    )
+      .then((response) => {
+        return response.json();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    console.log(red);
+    if (values.password === "12345") {
+      login(values);
+    } else {
+      setStatusForm({ password: "error" });
+    }
     // setuserConfiguration({ ...values });
   };
   return (
@@ -77,6 +109,7 @@ const Login = ({ setuserConfiguration }) => {
             <Form.Item
               label="Password"
               name="password"
+              validateStatus={statusForm.password}
               rules={[
                 {
                   required: true,
@@ -93,6 +126,7 @@ const Login = ({ setuserConfiguration }) => {
                 style={{ width: "100%", marginTop: "20px" }}
                 type="primary"
                 htmlType="submit"
+                loading={false}
               >
                 Submit
               </Button>
