@@ -1,4 +1,6 @@
 /* eslint-disable react/prop-types */
-import { LoginMenu, Layaout } from "./components";
 
-export { LoginMenu, Layaout };
+import { LoginMenu } from "./components";
+import {MainView} from "./components/mainView"
+
+export { LoginMenu, MainView };

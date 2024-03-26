@@ -1,26 +1,26 @@
 /* eslint-disable react/prop-types */
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { LoginMenu, Layaout } from "./routeList";
+import { RouterProvider,createBrowserRouter } from "react-router-dom";
+import { LoginMenu, MainView } from "./routeList";
 import { AuthContext } from "./context/userContext";
 import { useContext } from "react";
 
 const App = () => {
-  const { user } = useContext(AuthContext);
-
+  const { user,loaderRedirect } = useContext(AuthContext);
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <MainView />,
+      loader:loaderRedirect
+      
+    },
+    {
+      path: "/Login",
+      element: <LoginMenu />,
+    },
+  ]);
   console.log(user);
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={user?.isLogged ? <Layaout /> : <LoginMenu />}
-        />
-        <Route
-          path="/Login"
-          element={user?.isLogged ? <Layaout /> : <LoginMenu />}
-        />
-      </Routes>
-    </BrowserRouter>
+    <RouterProvider router={router} />
   );
 };
 export default App;

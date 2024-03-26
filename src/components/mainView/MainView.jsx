@@ -1,7 +1,9 @@
 import React from "react";
+import { Layout, Tooltip, theme } from "antd";
+const {  Content } = Layout;
+import {LateralMenu } from "./index.js";
+import { MainFooter, MainHeader } from "../index.js";
 import { UserOutlined } from "@ant-design/icons";
-import { Layout, Menu, theme } from "antd";
-const { Header, Content, Footer, Sider } = Layout;
 
 const items = [
   {
@@ -17,7 +19,7 @@ const items = [
       {
         key: "Oretail-key",
         name: "OracleReatil",
-        label: "Oracle Retail",
+        label: <Tooltip title="Oracle Retail">Oracle Retail</Tooltip>,
         onClick: (e) => {
           console.log(e);
         },
@@ -26,7 +28,11 @@ const items = [
           {
             key: "IdVentasaRTLOG-key",
             name: "IngracionDeVentaRTLG",
-            label: "Integración de Ventas a RTLOG",
+            label: (
+              <Tooltip placement="right" title="Integración de Ventas a RTLOG">
+                Integración de Ventas a RTLOG
+              </Tooltip>
+            ),
             onClick: (e) => {
               console.log(e);
             },
@@ -36,7 +42,11 @@ const items = [
           {
             key: "CargaRemisionProv-key",
             name: "CargaRemisionProv",
-            label: "Carga Remisiones Prov. Mayoristas a Reim Injector",
+            label: (
+              <Tooltip title="Carga Remisiones Prov. Mayoristas a Reim Injector">
+                Carga Remisiones Prov. Mayoristas a Reim Injector
+              </Tooltip>
+            ),
             onClick: (e) => {
               console.log(e);
             },
@@ -185,59 +195,26 @@ const items = [
   },
 ];
 
-export const Layaout = () => {
+const MainView = () => {
   const themeConfig = theme.useToken();
   const {
     token: { colorBgContainer },
   } = themeConfig;
-  console.log(colorBgContainer);
   return (
     <Layout padding="-2px" margin="-1px">
-      <Sider
-        breakpoint="lg"
-        collapsedWidth="0"
-        width={250}
-        style={{
-          backgroundColor: colorBgContainer,
-          height: "100vh",
-        }}
-        onBreakpoint={(broken) => {
-          console.log(broken);
-        }}
-        onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
-        }}
-      >
-        <div style={{ height: "80px", color: "white" }}>Farma logo</div>
-        <Menu
-          // style={{ minWidth: "400px" }}
-          theme="light"
-          mode="inline"
-          defaultSelectedKeys={["10"]}
-          items={items}
-        />
-      </Sider>
+        <LateralMenu items={items} colorBgContainer={colorBgContainer} />
       <Layout>
-        <Header
-          style={{
-            padding: 0,
-            background: colorBgContainer,
-          }}
+        <MainHeader
+         colorBgContainer={colorBgContainer}
         />
         <Content
           style={{
             margin: "24px 16px 0",
           }}
         ></Content>
-        <Footer
-          style={{
-            textAlign: "center",
-            padding: 10,
-          }}
-        >
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
-        </Footer>
+        <MainFooter />
       </Layout>
     </Layout>
   );
 };
+export default MainView;

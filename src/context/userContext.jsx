@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { createContext, useEffect, useState } from "react";
+import { redirect } from "react-router-dom";
 import CryptoJS from "crypto-js";
 
 // Crear el contexto de inicio de sesión
@@ -13,6 +14,11 @@ function decrypt(text, secretKey) {
 }
 
 const AuthProvider = ({ children }) => {
+  const info = localStorage.getItem("userInfo");
+  const [user, setUser] = useState(JSON.parse(info));
+
+  console.log(user);
+
   useEffect(() => {
     const info = localStorage.getItem("userInfo");
     if (info !== null) {
@@ -20,16 +26,41 @@ const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const [user, setUser] = useState(null);
-
-  const login = (userData) => {
+  const login = async (userData) => {
     /* const encryptedInfo = CryptoJS.AES.encrypt(
       JSON.stringify({ ...userData, isLogged: true }),
       secretKey
     ).toString();*/
+       /*
+           const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        grant_type: "client_credentials",
+        client_id: userData.username,
+        client_secret: userData.password,
+        scorpe: "Masivas",
+      }),
+    };
+       const res = await fetch(
+      "https://api-oauth2-fda.apps.cloud-ocp-stg.fahorro.com.mx/oauth2/ldap/jwt",
+      requestOptions
+    )
+      .then((response) => {
+        return response.json();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    console.log(res);*/
+ // Cuando res sea true y devuelva la informaci[on correcta llenara data info con los datos y la asignara a local storage]
     const dataInfo = { ...userData, isLogged: true };
     console.log(dataInfo);
     localStorage.setItem("userInfo", JSON.stringify(dataInfo));
+    return true;
   };
   /* const getUserInfo=()=>{
 
@@ -39,8 +70,17 @@ const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
+  const loaderRedirect = async () => {
+    console.log('REEDIRECT',!user?.isLogged)
+    if (!user?.isLogged) {
+      return redirect("/login");
+    } else {
+      return null
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, loaderRedirect }}>
       {children}
     </AuthContext.Provider>
   );
