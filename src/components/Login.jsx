@@ -3,15 +3,15 @@ import { Button, Form, Input, theme, Card } from "antd";
 import { useContext } from "react";
 import { AuthContext } from "../context/userContext";
 import { Layout } from "antd";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const { Header, Footer, Content } = Layout;
 
 const Login = () => {
   const themeConfig = theme.useToken();
-const {
-  token: { colorBgContainer },
-} = themeConfig;
+  const {
+    token: { colorBgContainer },
+  } = themeConfig;
 
   const { login, user } = useContext(AuthContext);
 
@@ -19,21 +19,18 @@ const {
     password: null,
     buttom: null,
   });
-useEffect(() => {
-  console.log('se eejecuta esto')
-  if(user?.isLogged) window.location = "/"
-}, [])
-
+  useEffect(() => {
+    console.log("se eejecuta esto");
+    if (user?.isLogged) window.location = "/";
+  }, []);
 
   const onFinish = async (values) => {
-
-    if (values.password === "12345") {
-      const res = await login(values);
-      console.log(res)
-      if (res) window.location = "/";
-    } else {
+    const res = await login(values);
+    console.log(res);
+    //if (res) window.location = "/";
+    /*  else {
       setStatusForm({ password: "error" });
-    }
+    }*/
     // setuserConfiguration({ ...values });
   };
   return (
@@ -72,9 +69,7 @@ useEffect(() => {
               remember: true,
             }}
             onFinish={onFinish}
-            onFinishFailed={() => {
-
-            }}
+            onFinishFailed={() => {}}
             autoComplete="off"
           >
             <Form.Item

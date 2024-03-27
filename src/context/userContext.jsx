@@ -31,35 +31,45 @@ const AuthProvider = ({ children }) => {
       JSON.stringify({ ...userData, isLogged: true }),
       secretKey
     ).toString();*/
-       /*
-           const requestOptions = {
+
+    const requestOptions = {
       method: "POST",
+      mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify({
         grant_type: "client_credentials",
         client_id: userData.username,
         client_secret: userData.password,
-        scorpe: "Masivas",
+        scope: "*",
       }),
     };
-       const res = await fetch(
+    const res = await fetch(
       "https://api-oauth2-fda.apps.cloud-ocp-stg.fahorro.com.mx/oauth2/ldap/jwt",
       requestOptions
     )
       .then((response) => {
+        // Verifica si la respuesta es exitosa (código de estado en el rango 200-299)
+        if (!response.ok) {
+          throw new Error("Error en la solicitud: " + response.status);
+        }
+        // Convierte la respuesta a JSON
         return response.json();
       })
+      .then((data) => {
+        // Aquí puedes hacer algo con los datos de la respuesta
+        console.log("Datos de la respuesta:", data);
+      })
       .catch((error) => {
-        console.log(error);
+        // Captura cualquier error de red o de la API
+        console.log("Error al hacer la solicitud:", error);
       });
-    console.log(res);*/
- // Cuando res sea true y devuelva la informaci[on correcta llenara data info con los datos y la asignara a local storage]
+    console.log(res);
+    // Cuando res sea true y devuelva la informaci[on correcta llenara data info con los datos y la asignara a local storage]
     const dataInfo = { ...userData, isLogged: true };
     console.log(dataInfo);
-    localStorage.setItem("userInfo", JSON.stringify(dataInfo));
+    //localStorage.setItem("userInfo", JSON.stringify(dataInfo));
     return true;
   };
   /* const getUserInfo=()=>{
@@ -71,11 +81,11 @@ const AuthProvider = ({ children }) => {
   };
 
   const loaderRedirect = async () => {
-    console.log('REEDIRECT',!user?.isLogged)
+    console.log("REEDIRECT", !user?.isLogged);
     if (!user?.isLogged) {
       return redirect("/login");
     } else {
-      return null
+      return null;
     }
   };
 
