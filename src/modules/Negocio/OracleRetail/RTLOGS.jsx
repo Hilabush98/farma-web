@@ -1,10 +1,11 @@
 import { CardComponent, TableComponent } from "../../../components";
- const RTLOGS = () => {
+const RTLOGS = () => {
   return (
     <>
-    <CardComponent/>
-    <TableComponent/>
+      <h1>aa</h1>
+      <CardComponent />
+      <TableComponent />
     </>
-  )
-}
+  );
+};
 export default RTLOGS;

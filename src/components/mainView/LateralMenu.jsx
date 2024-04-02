@@ -15,7 +15,6 @@ const LateralMenu = ({ items, colorBgContainer }) => {
           backgroundColor: colorBgContainer,
           height: "100vh",
         }}
-
       >
         <div style={{ height: "80px", color: "white" }}>Farma logo</div>
         <Menu
@@ -23,6 +22,9 @@ const LateralMenu = ({ items, colorBgContainer }) => {
           theme={colorBgContainer ? "light" : "dark"}
           mode="inline"
           multiple
+          forceSubMenuRender
+          selectedKeys="IdVentasaRTLOG-key"
+          defaultOpenKeys={["Negocio-key", "Oretail-key", "IdVentasaRTLOG-key"]}
           defaultSelectedKeys={["10"]}
           items={items}
         ></Menu>
@@ -36,10 +38,12 @@ LateralMenu.propTypes = {
   colorBgContainer: PropTypes.any.isRequired,
 };
 LateralMenu.defaultProps = {
-  items: [{
-    key:'0',
-    name:''
-}],
+  items: [
+    {
+      key: "0",
+      name: "",
+    },
+  ],
   colorBgContainer: "light",
 };
 export default LateralMenu;

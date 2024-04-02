@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import React from "react";
 import { Layout, Tooltip, theme } from "antd";
-const {  Content } = Layout;
-import {LateralMenu } from "./index.js";
+const { Content } = Layout;
+import { LateralMenu } from "./index.js";
 import { MainFooter, MainHeader } from "../index.js";
 import { UserOutlined } from "@ant-design/icons";
 
@@ -165,6 +165,7 @@ const items = [
         key: "Email-key",
         name: "Email",
         label: "Email",
+
         onClick: (e) => {
           console.log(e);
         },
@@ -195,27 +196,30 @@ const items = [
     icon: React.createElement(UserOutlined),
   },
 ];
+const findFatherKeys = (keyValue, items) => {
+  const arrayOfFatherKeys = items.map((item) => {
+    console.log(item);
 
-const MainView = ({ContentComponent}) => {
-
-
+    return menu;
+  });
+  return null;
+};
+const MainView = ({ ContentComponent }) => {
   const themeConfig = theme.useToken();
   const {
     token: { colorBgContainer },
   } = themeConfig;
   return (
     <Layout padding="-2px" margin="-1px">
-        <LateralMenu items={items} colorBgContainer={colorBgContainer} />
+      <LateralMenu items={items} colorBgContainer={colorBgContainer} />
       <Layout>
-        <MainHeader
-         colorBgContainer={colorBgContainer}
-        />
+        <MainHeader colorBgContainer={colorBgContainer} />
         <Content
           style={{
             margin: "24px 16px 0",
           }}
         >
-{(ContentComponent)?ContentComponent:<a>loading.....</a>}
+          {ContentComponent ? ContentComponent : <a>loading.....</a>}
         </Content>
         <MainFooter />
       </Layout>
