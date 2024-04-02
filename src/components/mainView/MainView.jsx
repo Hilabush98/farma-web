@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 import { Layout, Tooltip, theme } from "antd";
 const {  Content } = Layout;
@@ -195,7 +196,9 @@ const items = [
   },
 ];
 
-const MainView = () => {
+const MainView = ({ContentComponent}) => {
+
+
   const themeConfig = theme.useToken();
   const {
     token: { colorBgContainer },
@@ -211,7 +214,9 @@ const MainView = () => {
           style={{
             margin: "24px 16px 0",
           }}
-        ></Content>
+        >
+{(ContentComponent)?ContentComponent:<a>loading.....</a>}
+        </Content>
         <MainFooter />
       </Layout>
     </Layout>

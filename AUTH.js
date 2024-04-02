@@ -11,19 +11,19 @@ const Execute= async ()=>{
       scope: "*",
     }),
   };
-  const red =  fetch(
+  const red =  await fetch(
     "https://api-oauth2-fda.apps.cloud-ocp-stg.fahorro.com.mx/oauth2/ldap/jwt",
     requestOptions
   )
     .then((response) => {
-      console.log(response)
+      console.log('responsee',response)
       return response.json();
     })
     .then(data=>{
       console.log('DATA',data);
     })
     .catch((error) => {
-      console.log('ERROR',error);
+      console.log('ERROR',error.stack);
     });
     console.log(red)
 }
