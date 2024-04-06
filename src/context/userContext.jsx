@@ -31,7 +31,7 @@ const AuthProvider = ({ children }) => {
       JSON.stringify({ ...userData, isLogged: true }),
       secretKey
     ).toString();*/
-
+/*
     const requestOptions = {
       method: "POST",
       mode: "cors",
@@ -64,12 +64,12 @@ const AuthProvider = ({ children }) => {
       .catch((error) => {
         // Captura cualquier error de red o de la API
         console.log("Error al hacer la solicitud:", error);
-      });
-    console.log(res);
+      });*/
+    //console.log(res);
     // Cuando res sea true y devuelva la informaci[on correcta llenara data info con los datos y la asignara a local storage]
     const dataInfo = { ...userData, isLogged: true };
     console.log(dataInfo);
-    //localStorage.setItem("userInfo", JSON.stringify(dataInfo));
+    localStorage.setItem("userInfo", JSON.stringify(dataInfo));
     return true;
   };
   /* const getUserInfo=()=>{
