@@ -36,6 +36,10 @@ const items = [
             ),
             onClick: (e) => {
               console.log(e);
+              console.log(window.location.pathname);
+              if (window.location.pathname !== "/Negocio/Oracle/Rtlog") {
+                window.location.href = "/Negocio/Oracle/Rtlog";
+              }
             },
             value: "1.1.1",
             icon: React.createElement(UserOutlined),
@@ -196,15 +200,28 @@ const items = [
     icon: React.createElement(UserOutlined),
   },
 ];
-const findFatherKeys = (keyValue, items) => {
-  const arrayOfFatherKeys = items.map((item) => {
-    console.log(item);
+/*const findFatherKeys = (keyValue, items, arr = []) => {
+  console.log(items);
 
-    return menu;
-  });
-  return null;
-};
+  for (let item of items) {
+    console.log("item actual", item.key);
+    if (item.children) {
+      const childIndex = item.children.find((x) => x.key === keyValue);
+      console.log("Se encontró en los child actual?", childIndex);
+
+      if (!childIndex) {
+        console.log("hace busqueda dentro de los child", item.children);
+        arr.push(item.key);
+        findFatherKeys(keyValue, item.children);
+        break;
+      }
+    }
+  }
+  return arr;
+};*/
 const MainView = ({ ContentComponent }) => {
+  // console.log(findFatherKeys("IdVentasaRTLOG-key", items));
+
   const themeConfig = theme.useToken();
   const {
     token: { colorBgContainer },

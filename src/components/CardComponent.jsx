@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
-import { Card, Statistic } from 'antd';
+import { Card, Statistic } from "antd";
 
- const CardComponent = ({tittle, value, style, icon, suffix, typeCard}) => {
+const CardComponent = ({ tittle, value, style, prefix, suffix, typeCard }) => {
+  console.log(tittle);
   {
     switch (typeCard) {
-      case 'statistic':
-        
-        return(
+      case "statistic":
+        return (
           <>
             <Card bordered={false}>
               <Statistic
@@ -14,16 +14,16 @@ import { Card, Statistic } from 'antd';
                 value={value}
                 precision={2}
                 valueStyle={style}
-                prefix={icon}
+                prefix={prefix}
                 suffix={suffix}
               />
-          </Card> 
+            </Card>
           </>
         );
-    
+
       default:
-        return (null);
+        return null;
     }
-  } 
-}
-export default CardComponent
+  }
+};
+export default CardComponent;
