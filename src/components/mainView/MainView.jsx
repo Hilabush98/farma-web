@@ -4,7 +4,18 @@ import { Layout, Tooltip, theme } from "antd";
 const { Content } = Layout;
 import { LateralMenu } from "./index.js";
 import { MainFooter, MainHeader } from "../index.js";
-import { UserOutlined } from "@ant-design/icons";
+import {
+  UserOutlined,
+  SettingOutlined,
+  FundOutlined,
+  DatabaseOutlined,
+  ShoppingCartOutlined,
+  TruckOutlined,
+  PullRequestOutlined,
+  ToTopOutlined,
+  VerticalAlignBottomOutlined,
+  ClockCircleOutlined,
+} from "@ant-design/icons";
 
 const items = [
   {
@@ -15,7 +26,7 @@ const items = [
       console.log(e);
     },
     value: "1",
-    icon: React.createElement(UserOutlined),
+    icon: <FundOutlined />,
     children: [
       {
         key: "Oretail-key",
@@ -25,6 +36,7 @@ const items = [
           console.log(e);
         },
         value: "1.1",
+        icon: <DatabaseOutlined />,
         children: [
           {
             key: "IdVentasaRTLOG-key",
@@ -42,7 +54,7 @@ const items = [
               }
             },
             value: "1.1.1",
-            icon: React.createElement(UserOutlined),
+            icon: <PullRequestOutlined />,
           },
           {
             key: "CargaRemisionProv-key",
@@ -56,7 +68,7 @@ const items = [
               console.log(e);
             },
             value: "1.1.2",
-            icon: React.createElement(UserOutlined),
+            icon: <ToTopOutlined />,
           },
           {
             key: "CargaPreciosStage-key",
@@ -66,7 +78,7 @@ const items = [
               console.log(e);
             },
             value: "1.1.3",
-            icon: React.createElement(UserOutlined),
+            icon: <ToTopOutlined />,
           },
         ],
       },
@@ -78,7 +90,7 @@ const items = [
           console.log(e);
         },
         value: "1.2",
-        icon: React.createElement(UserOutlined),
+        icon: <ShoppingCartOutlined />,
         children: [
           {
             key: "DescargaPedidos-key",
@@ -88,7 +100,7 @@ const items = [
               console.log(e);
             },
             value: "1.2.1",
-            icon: React.createElement(UserOutlined),
+            icon: <VerticalAlignBottomOutlined />,
           },
           {
             key: "TiemposEstimadosLlegada-key",
@@ -98,7 +110,7 @@ const items = [
               console.log(e);
             },
             value: "1.2.2",
-            icon: React.createElement(UserOutlined),
+            icon: <ClockCircleOutlined />,
           },
         ],
       },
@@ -110,7 +122,7 @@ const items = [
           console.log(e);
         },
         value: "1.3",
-        icon: React.createElement(UserOutlined),
+        icon: <TruckOutlined />,
       },
     ],
   },
@@ -198,6 +210,13 @@ const items = [
       },
     ],
     icon: React.createElement(UserOutlined),
+  },
+  {
+    key: "Monitor-de-procesos-key",
+    name: "Monitor de procesos",
+    label: "Monitor de procesos",
+    value: 4,
+    icon: <SettingOutlined />,
   },
 ];
 /*const findFatherKeys = (keyValue, items, arr = []) => {
