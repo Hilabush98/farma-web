@@ -1,28 +1,28 @@
 /* eslint-disable react/prop-types */
 
 import { LoginMenu } from "./components";
-import {MainView} from "./components/mainView"
+import { MainView } from "./components/mainView";
+import { RTLOGS } from "./modules/Negocio/OracleRetail";
 
-console.log(LoginMenu)
-const createRoutes=(loaderRedirect)=>{
-const routes=[
+console.log(LoginMenu);
+const createRoutes = (loaderRedirect) => {
+  const routes = [
     {
       path: "/",
       element: <MainView ContentComponent={null} />,
-      loader:loaderRedirect
-      
+      loader: loaderRedirect,
     },
     {
       path: "/Negocio/Oracle/Rtlog",
-      element: <MainView ContentComponent={null} />,
-      loader:loaderRedirect
+      element: <MainView ContentComponent={<RTLOGS />} />,
+      loader: loaderRedirect,
     },
     {
       path: "/Login",
       element: <LoginMenu />,
     },
-  ]
+  ];
 
-    return routes;
-}
+  return routes;
+};
 export default createRoutes;

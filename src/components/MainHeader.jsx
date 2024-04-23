@@ -1,15 +1,49 @@
 import { Layout } from "antd";
 import PropTypes from "prop-types";
-
+import { Breadcrumb,Avatar, Col, Row, Popover, Typography} from 'antd';
+import { HomeOutlined, UserOutlined , } from '@ant-design/icons';
 const { Header } = Layout;
 const MainHeader = ({ colorBgContainer }) => {
+
+
   return (
     <Header
       style={{
         padding: 0,
         background: colorBgContainer,
       }}
-    />
+    >
+      <Row gutter={20}>
+      <Col span={20}  >
+      <Breadcrumb
+      style={{fontSize:'20px', margin:'17px 0 10px 10px'}}
+    items={[
+      {
+        href: '/',
+        title: <HomeOutlined style={{fontSize:'23px'}} />,
+      },
+      {
+        title: (
+          <>
+            <span>Application List</span>
+          </>
+        ),
+      },
+      {
+        title: 'Application',
+      },
+    ]}
+  />
+      </Col>
+      <Col span={4}style={{ marginTop:'10px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Popover placement="bottom" title={'text'} content={<><h1>asda</h1></>}>
+        <Avatar onClick={(e)=>console.log(e)} size={45} icon={<UserOutlined />} style={{cursor:'pointer'}} />
+        </Popover>
+      
+      </Col>
+    </Row>
+      
+      </Header>
   );
 };
 

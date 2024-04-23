@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
-import {Table } from 'antd';
+import { Table } from "antd";
 
- const TableComponent = ({columns,data}) => {
+const TableComponent = ({ columns, data }) => {
+  console.log(columns);
   return (
     <>
-     <Table columns={columns} dataSource={data}  pagination={10}/>
+      <Table columns={columns} dataSource={data} pagination={{pageSize:5}}/>
     </>
-   
-  )
-}
-export default TableComponent
+  );
+};
+export default TableComponent;

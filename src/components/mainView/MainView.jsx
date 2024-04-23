@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import React from "react";
 import { Layout, Tooltip, theme } from "antd";
-const {  Content } = Layout;
-import {LateralMenu } from "./index.js";
+const { Content } = Layout;
+import { LateralMenu } from "./index.js";
 import { MainFooter, MainHeader } from "../index.js";
 import { UserOutlined } from "@ant-design/icons";
 
@@ -36,6 +36,10 @@ const items = [
             ),
             onClick: (e) => {
               console.log(e);
+              console.log(window.location.pathname);
+              if (window.location.pathname !== "/Negocio/Oracle/Rtlog") {
+                window.location.href = "/Negocio/Oracle/Rtlog";
+              }
             },
             value: "1.1.1",
             icon: React.createElement(UserOutlined),
@@ -165,6 +169,7 @@ const items = [
         key: "Email-key",
         name: "Email",
         label: "Email",
+
         onClick: (e) => {
           console.log(e);
         },
@@ -195,9 +200,27 @@ const items = [
     icon: React.createElement(UserOutlined),
   },
 ];
+/*const findFatherKeys = (keyValue, items, arr = []) => {
+  console.log(items);
 
-const MainView = ({ContentComponent}) => {
+  for (let item of items) {
+    console.log("item actual", item.key);
+    if (item.children) {
+      const childIndex = item.children.find((x) => x.key === keyValue);
+      console.log("Se encontró en los child actual?", childIndex);
 
+      if (!childIndex) {
+        console.log("hace busqueda dentro de los child", item.children);
+        arr.push(item.key);
+        findFatherKeys(keyValue, item.children);
+        break;
+      }
+    }
+  }
+  return arr;
+};*/
+const MainView = ({ ContentComponent }) => {
+  // console.log(findFatherKeys("IdVentasaRTLOG-key", items));
 
   const themeConfig = theme.useToken();
   const {
@@ -205,17 +228,15 @@ const MainView = ({ContentComponent}) => {
   } = themeConfig;
   return (
     <Layout padding="-2px" margin="-1px">
-        <LateralMenu items={items} colorBgContainer={colorBgContainer} />
+      <LateralMenu items={items} colorBgContainer={colorBgContainer} />
       <Layout>
-        <MainHeader
-         colorBgContainer={colorBgContainer}
-        />
+        <MainHeader colorBgContainer={colorBgContainer} />
         <Content
           style={{
             margin: "24px 16px 0",
           }}
         >
-{(ContentComponent)?ContentComponent:<a>loading.....</a>}
+          {ContentComponent ? ContentComponent : <a>loading.....</a>}
         </Content>
         <MainFooter />
       </Layout>
