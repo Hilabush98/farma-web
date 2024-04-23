@@ -9,7 +9,7 @@ const {  Footer  } = Layout;
       padding: 10,
     }}
   >
-    pruebaaaaa
+    Farmacias del ahorro Monitor de Interfaces
   </Footer>
   )
 }

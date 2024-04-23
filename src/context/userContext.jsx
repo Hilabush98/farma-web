@@ -27,12 +27,14 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (userData) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+
     /* const encryptedInfo = CryptoJS.AES.encrypt(
       JSON.stringify({ ...userData, isLogged: true }),
       secretKey
     ).toString();*/
 
-    const requestOptions = {
+    /* const requestOptions = {
       method: "POST",
       mode: "cors",
       headers: {
@@ -46,7 +48,7 @@ const AuthProvider = ({ children }) => {
       }),
     };
     const res = await fetch(
-      "https://api-test-axl-f7c153b11eae.herokuapp.com/api/login",
+      "https://api-oauth2-fda.apps.cloud-ocp-stg.fahorro.com.mx/oauth2/ldap/jwt",
       requestOptions
     )
       .then((response) => {
@@ -60,8 +62,8 @@ const AuthProvider = ({ children }) => {
       })
       .catch((error) => {
         console.log("Error al hacer la solicitud:", error);
-      });
-    console.log(res);
+      });*/
+    // console.log(res);
     const dataInfo = { ...userData, isLogged: true };
     console.log(dataInfo);
     localStorage.setItem("userInfo", JSON.stringify(dataInfo));
@@ -76,7 +78,6 @@ const AuthProvider = ({ children }) => {
   };
 
   const loaderRedirect = async () => {
-    console.log("REEDIRECT", !user?.isLogged);
     if (!user?.isLogged) {
       return redirect("/login");
     } else {

@@ -3,13 +3,20 @@ import { CardComponent, TableComponent } from "../../../components";
 import { Col, Row } from "antd";
 
 const RTLOGS = () => {
-  const [dataInfo, setDataInfo] = useState(null);
+  const [dataInfo, setDataInfo] = useState([]);
   return (
     <>
-      <h1>aa</h1>
       <Row gutter={[10, 20]}>
         <Col span={8}>
           <CardComponent
+          onClickCard={()=>setDataInfo([
+             {
+              key: '2',
+              name: 'John',
+              age: 42,
+              address: '10 Downing Street'
+            }
+          ])}
             tittle={"Hola Mundo"}
             value={"2"}
             typeCard="statistic"
@@ -19,6 +26,7 @@ const RTLOGS = () => {
         </Col>
         <Col span={8}>
           <CardComponent
+          onClickCard={()=>setDataInfo([])}
             tittle={"Hola Mundo"}
             value={"2"}
             typeCard="statistic"
@@ -28,6 +36,19 @@ const RTLOGS = () => {
         </Col>
         <Col span={8}>
           <CardComponent
+            onClickCard={()=>setDataInfo([
+              {
+                key: '1',
+                name: 'Mike',
+                age: 32,
+                address: '10 Downing Street'
+              }, {
+                key: '2',
+                name: 'John',
+                age: 42,
+                address: '10 Downing Street'
+              }
+            ])}
             tittle={"Hola Mundo"}
             value={"2"}
             typeCard="statistic"
@@ -55,7 +76,7 @@ const RTLOGS = () => {
                 key: "address",
               },
             ]}
-            data={[]}
+            data={dataInfo}
           />
         </Col>
       </Row>
