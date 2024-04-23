@@ -1,17 +1,17 @@
 /* eslint-disable react/prop-types */
 import { createContext, useEffect, useState } from "react";
 import { redirect } from "react-router-dom";
-import CryptoJS from "crypto-js";
+//import CryptoJS from "crypto-js";
 
 // Crear el contexto de inicio de sesión
 const AuthContext = createContext();
-const secretKey = "#$3l03!";
+/*const secretKey = "#$3l03!";
 function decrypt(text, secretKey) {
   const decipher = crypto.createDecipher("aes-256-cbc", secretKey);
   let decrypted = decipher.update(text, "hex", "utf8");
   decrypted += decipher.final("utf8");
   return decrypted;
-}
+}*/
 
 const AuthProvider = ({ children }) => {
   const info = localStorage.getItem("userInfo");
@@ -34,7 +34,7 @@ const AuthProvider = ({ children }) => {
       secretKey
     ).toString();*/
 
-    /* const requestOptions = {
+    const requestOptions = {
       method: "POST",
       mode: "cors",
       headers: {
@@ -62,17 +62,15 @@ const AuthProvider = ({ children }) => {
       })
       .catch((error) => {
         console.log("Error al hacer la solicitud:", error);
-      });*/
-    // console.log(res);
+      });
+    console.log(res);
+    // Cuando res sea true y devuelva la informaci[on correcta llenara data info con los datos y la asignara a local storage]
     const dataInfo = { ...userData, isLogged: true };
     console.log(dataInfo);
     localStorage.setItem("userInfo", JSON.stringify(dataInfo));
     return true;
   };
-  /* const getUserInfo=()=>{
 
-  }
-*/
   const logout = () => {
     setUser(null);
   };
