@@ -6,14 +6,29 @@ import { Layout } from "antd";
 import { useState, useEffect } from "react";
 import { useLazyQuery, gql } from "@apollo/client";
 
-const getAllToolsgql = gql``;
+const getAllToolsgql = gql`
+  query ($profileId: Int!) {
+    getAllToolByProfile(profile_id: $profileId) {
+      tool {
+        name
+        is_active
+        path
+        tool_father {
+          name
+        }
+      }
+    }
+  }
+`;
 
 const { Header, Footer, Content } = Layout;
 
 const Login = () => {
   const [getAllTools] = useLazyQuery(getAllToolsgql, {
     fetchPolicy: "cache-first",
-    onCompleted: () => {
+    variables: { profileId: 1 },
+    onCompleted: (data) => {
+      console.log(data);
       console.log("Terminó");
       // window.location = "/";
     },
