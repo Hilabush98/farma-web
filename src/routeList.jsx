@@ -4,7 +4,6 @@ import { LoginMenu } from "./components";
 import { MainView } from "./components/mainView";
 import { RTLOGS } from "./modules/Negocio/OracleRetail";
 
-console.log(LoginMenu);
 const createRoutes = (loaderRedirect) => {
   const routes = [
     {

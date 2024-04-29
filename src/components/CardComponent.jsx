@@ -2,15 +2,29 @@
 import { Card, Statistic, Typography } from "antd";
 const { Text } = Typography;
 import { Button, Switch } from "antd";
+import { getIcon } from "../utils";
 
 import { SunOutlined, MoonOutlined } from "@ant-design/icons";
 const CardComponent = (props) => {
+  const iconStyle = {
+    textAlign: "center",
+    fontSize: "45px",
+    margin: "10px 10px 0 10px",
+  };
+  const divStyle = {
+    textAlign: "center",
+    flexBasis: "33.33%",
+    padding: "0",
+    width: "75px",
+    flexGrow: 1,
+    cursor: "pointer",
+  };
   {
     switch (props.typeCard) {
       case "statistic":
         return (
           <>
-            <Card bordered={false} onClick={props.onClickCard}>
+            <Card bordered={true} onClick={props.onClickCard}>
               <Statistic
                 title={props.tittle}
                 value={props.value}
@@ -26,6 +40,30 @@ const CardComponent = (props) => {
         return (
           <>
             <Card
+              actions={[
+                <Switch
+                  key={"Theme"}
+                  checkedChildren={<SunOutlined />}
+                  unCheckedChildren={<MoonOutlined />}
+                  defaultChecked
+                  style={{
+                    alignItems: "center",
+
+                    width: "80%",
+                  }}
+                />,
+                <Switch
+                  key={"Theme"}
+                  checkedChildren={"ES"}
+                  unCheckedChildren={"EN"}
+                  defaultChecked
+                  style={{
+                    alignItems: "center",
+
+                    width: "80%",
+                  }}
+                />,
+              ]}
               title={
                 <>
                   <div style={{ whiteSpace: "normal", alignItems: "center" }}>
@@ -55,16 +93,6 @@ const CardComponent = (props) => {
                 </>
               }
             >
-              <Switch
-                checkedChildren={<SunOutlined />}
-                unCheckedChildren={<MoonOutlined />}
-                defaultChecked
-                style={{
-                  alignItems: "center",
-                  marginBottom: "20px",
-                  width: "100%",
-                }}
-              />
               <Button
                 size="small"
                 type="primary"
@@ -84,6 +112,37 @@ const CardComponent = (props) => {
               >
                 Logout
               </Button>
+            </Card>
+          </>
+        );
+      case "mainApps":
+        return (
+          <>
+            <Card
+              key={"KEY ASD"}
+              styles={{
+                body: {
+                  padding: "8px",
+                  display: "inline-flex",
+                },
+              }}
+            >
+              {props.cardApps.map((menuOption) => (
+                <Card.Grid
+                  style={divStyle}
+                  onClick={menuOption.onClick}
+                  key={`key-${menuOption.appName}-cardGrid`}
+                >
+                  {getIcon(
+                    menuOption.icon,
+                    iconStyle,
+                    `key-${menuOption.appName}-icon`
+                  )}
+                  <Typography key={`key-${menuOption.appName}-Typography`}>
+                    {menuOption.appName}
+                  </Typography>
+                </Card.Grid>
+              ))}
             </Card>
           </>
         );
