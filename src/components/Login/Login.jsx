@@ -1,154 +1,175 @@
 /* eslint-disable react/prop-types */
-import { Button, Form, Input, theme, Card } from "antd";
-import { useContext } from "react";
-import { AuthContext } from "../../context/userContext";
-import { Layout } from "antd";
-import { useState, useEffect } from "react";
-import { useLazyQuery, gql } from "@apollo/client";
-
-const getAllToolsgql = gql`
-  query ($profileId: Int!) {
-    getAllToolByProfile(profile_id: $profileId) {
-      tool {
-        name
-        is_active
-        path
-        tool_father {
-          name
-        }
-      }
-    }
-  }
-`;
+import { Button, Form, Input, theme, Card, Layout } from 'antd';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/userContext';
+import { useState, useEffect } from 'react';
+import { useLazyQuery } from '@apollo/client';
+import { getProfilesByEmployee, LogInQuery } from './LoginQueries';
+import {
+    formatterToolsPermission,
+    formatterRoutePermission,
+} from '../../utils/index.js';
 
 const { Header, Footer, Content } = Layout;
 
 const Login = () => {
-  const [getAllTools] = useLazyQuery(getAllToolsgql, {
-    fetchPolicy: "cache-first",
-    variables: { profileId: 1 },
-    onCompleted: (data) => {
-      console.log(data);
-      console.log("Terminó");
-      // window.location = "/";
-    },
-  });
-  const themeConfig = theme.useToken();
-  const {
-    token: { colorBgContainer },
-  } = themeConfig;
+    const { token } = useContext(AuthContext);
 
-  const { login, user } = useContext(AuthContext);
+    useEffect(() => {
+        if (token) {
+            getAllTools();
+        }
+    }, []);
 
-  const [statusForm, setStatusForm] = useState({
-    password: null,
-    buttom: null,
-  });
-  useEffect(() => {
-    console.log("se eejecuta esto");
-    if (user?.isLogged) window.location = "/";
-  }, []);
+    const [getAllTools] = useLazyQuery(getProfilesByEmployee, {
+        fetchPolicy: 'cache-first',
+        context: {
+            authorization: `Bearer ${token}`,
+        },
+        onCompleted: ({ Tools }) => {
+            console.log(formatterToolsPermission(Tools));
+            localStorage.setItem(
+                'permissionsTools',
+                JSON.stringify(formatterToolsPermission(Tools))
+            );
+            localStorage.setItem(
+                'routePermission',
+                JSON.stringify(formatterRoutePermission(Tools))
+            );
 
-  const onFinish = async (values) => {
-    const res = await login(values);
-    if (res) {
-      const { data } = await getAllTools();
-      console.log(data);
-    } else {
-      setStatusForm({ password: "error" });
-    }
-  };
-  return (
-    <Layout>
-      <Header
-        style={{
-          backgroundColor: colorBgContainer,
-          height: "10vh",
-          textAlign: "center",
-        }}
-      >
-        Cabecera
-      </Header>
-      <Content
-        style={{
-          backgroundColor: colorBgContainer,
-          height: "80vh",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Card style={{ width: 400, padding: "80px 0 10px 0" }}>
-          <Form
-            name="basic"
-            labelCol={{
-              span: 6,
-            }}
-            wrapperCol={{
-              span: 20,
-            }}
-            style={{
-              maxWidth: 600,
-            }}
-            initialValues={{
-              remember: true,
-            }}
-            onFinish={onFinish}
-            onFinishFailed={() => {}}
-            autoComplete="off"
-          >
-            <Form.Item
-              label="Username"
-              name="username"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your username!",
+            //  window.location = '/';
+        },
+    });
+    const [logInFetch] = useLazyQuery(LogInQuery, {
+        fetchPolicy: 'no-cache',
+        onCompleted: async ({ ResponseLogin }) => {
+            const { access_token, error, refresh_token, expires_in } =
+                ResponseLogin;
+            if (!error) {
+                localStorage.setItem('token', access_token);
+                localStorage.setItem('refresh_token', refresh_token);
+                localStorage.setItem('expires_in', JSON.stringify(expires_in));
+                location.reload();
+            } else {
+                setStatusForm({ password: 'error' });
+            }
+        },
+        onError: (error) => {
+            // agregar notstack y errores de notistack
+            console.error(error);
+        },
+    });
+    const themeConfig = theme.useToken();
+    const {
+        token: { colorBgContainer },
+    } = themeConfig;
+
+    const [statusForm, setStatusForm] = useState({
+        password: null,
+        buttom: null,
+    });
+
+    const onFinish = async ({ username, password }) => {
+        await logInFetch({
+            variables: {
+                credentials: {
+                    user: username,
+                    pass: password,
                 },
-              ]}
+            },
+        });
+    };
+    return (
+        <Layout>
+            <Header
+                style={{
+                    backgroundColor: colorBgContainer,
+                    height: '10vh',
+                    textAlign: 'center',
+                }}
             >
-              <Input />
-            </Form.Item>
-
-            <Form.Item
-              label="Password"
-              name="password"
-              validateStatus={statusForm.password}
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your password!",
-                },
-              ]}
+                Cabecera
+            </Header>
+            <Content
+                style={{
+                    backgroundColor: colorBgContainer,
+                    height: '80vh',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
             >
-              <Input.Password />
-            </Form.Item>
+                <Card style={{ width: 400, padding: '80px 0 10px 0' }}>
+                    <Form
+                        name="basic"
+                        labelCol={{
+                            span: 6,
+                        }}
+                        wrapperCol={{
+                            span: 20,
+                        }}
+                        style={{
+                            maxWidth: 600,
+                        }}
+                        initialValues={{
+                            remember: true,
+                        }}
+                        onFinish={onFinish}
+                        onFinishFailed={() => {}}
+                        autoComplete="off"
+                    >
+                        <Form.Item
+                            label="Username"
+                            name="username"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your username!',
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
 
-            <Form.Item wrapperCol>
-              <Button
-                size="large"
-                style={{ width: "100%", marginTop: "20px" }}
-                type="primary"
-                htmlType="submit"
-                loading={false}
-              >
-                Submit
-              </Button>
-            </Form.Item>
-          </Form>
-        </Card>
-      </Content>
-      <Footer
-        style={{
-          backgroundColor: colorBgContainer,
-          height: "10vh",
-          textAlign: "center",
-        }}
-      >
-        Derechos reservados FAH
-      </Footer>
-    </Layout>
-  );
+                        <Form.Item
+                            label="Password"
+                            name="password"
+                            validateStatus={statusForm.password}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your password!',
+                                },
+                            ]}
+                        >
+                            <Input.Password />
+                        </Form.Item>
+
+                        <Form.Item wrapperCol>
+                            <Button
+                                size="large"
+                                style={{ width: '100%', marginTop: '20px' }}
+                                type="primary"
+                                htmlType="submit"
+                                loading={false}
+                            >
+                                Submit
+                            </Button>
+                        </Form.Item>
+                    </Form>
+                </Card>
+            </Content>
+            <Footer
+                style={{
+                    backgroundColor: colorBgContainer,
+                    height: '10vh',
+                    textAlign: 'center',
+                }}
+            >
+                Derechos reservados FAH
+            </Footer>
+        </Layout>
+    );
 };
 
 export default Login;

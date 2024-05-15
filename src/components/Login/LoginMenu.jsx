@@ -1,11 +1,11 @@
-import { Login } from "..";
+import { Login } from '..';
 
 function LoginMenu() {
-  return (
-    <>
-      <Login />
-    </>
-  );
+    return (
+        <>
+            <Login />
+        </>
+    );
 }
 
 export default LoginMenu;
